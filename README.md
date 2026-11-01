@@ -196,3 +196,5 @@ python3 scripts/audit-api.py /path/to/kvmd /path/to/ustreamer
 Tests exercise HTTP authentication, sessions, request encoding, binary transfers, CLI dispatch and validation, TLS defaults, redirect boundaries, error handling, and cancellation against local HTTP servers. No physical PiKVM is required for these tests; hardware integration has not been verified.
 
 References: [PiKVM HTTP API](https://docs.pikvm.org/api/), [guanana/pikvm-lib](https://github.com/guanana/pikvm-lib), and [PiKVM Remote Control skill](https://mcpmarket.com/tools/skills/pikvm-remote-control).
+
+Repository protection, CI, and publication conventions are documented in [docs/REPOSITORY_SETUP.md](docs/REPOSITORY_SETUP.md).
