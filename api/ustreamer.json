@@ -1,0 +1,47 @@
+{
+  "repository": "https://github.com/pikvm/ustreamer",
+  "commit": "296639a2acd06f8f39131e2d27170caccf8fd63a",
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/streamer",
+      "location": "query",
+      "parameters": [
+        "action",
+        "advance_headers",
+        "dual_final_frames",
+        "extra_headers",
+        "key",
+        "zero_data"
+      ],
+      "source": "src/ustreamer/http/server.c"
+    },
+    {
+      "method": "GET",
+      "path": "/streamer/snapshot",
+      "location": "query",
+      "parameters": [],
+      "source": "src/ustreamer/http/server.c"
+    },
+    {
+      "method": "GET",
+      "path": "/streamer/state",
+      "location": "query",
+      "parameters": [],
+      "source": "src/ustreamer/http/server.c"
+    },
+    {
+      "method": "GET",
+      "path": "/streamer/stream",
+      "location": "query",
+      "parameters": [
+        "advance_headers",
+        "dual_final_frames",
+        "extra_headers",
+        "key",
+        "zero_data"
+      ],
+      "source": "src/ustreamer/http/server.c"
+    }
+  ]
+}

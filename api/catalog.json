@@ -1,0 +1,1177 @@
+[
+  {
+    "group": "alerts",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/alerts",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "alerts",
+    "name": "ack",
+    "method": "POST",
+    "path": "/api/alerts/ack",
+    "description": "Ack",
+    "parameters": [
+      "alerts*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "atx",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/atx",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "atx",
+    "name": "click",
+    "method": "POST",
+    "path": "/api/atx/click",
+    "description": "Click",
+    "parameters": [
+      "button*",
+      "wait"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "atx",
+    "name": "power",
+    "method": "POST",
+    "path": "/api/atx/power",
+    "description": "Power",
+    "parameters": [
+      "action*",
+      "wait"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "auth",
+    "name": "check",
+    "method": "GET",
+    "path": "/api/auth/check",
+    "description": "Check",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "auth",
+    "name": "login",
+    "method": "POST",
+    "path": "/api/auth/login",
+    "description": "Login",
+    "parameters": [],
+    "body_parameters": [
+      {
+        "name": "expire",
+        "flag": "expire",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "passwd",
+        "flag": "login-password",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "redirect",
+        "flag": "redirect",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "user",
+        "flag": "login-user",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "content_type": "application/x-www-form-urlencoded",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "auth",
+    "name": "logout",
+    "method": "POST",
+    "path": "/api/auth/logout",
+    "description": "Logout",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "system",
+    "name": "metrics",
+    "method": "GET",
+    "path": "/api/export/prometheus/metrics",
+    "description": "Metrics",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "gpio",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/gpio",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "gpio",
+    "name": "pulse",
+    "method": "POST",
+    "path": "/api/gpio/pulse",
+    "description": "Pulse",
+    "parameters": [
+      "channel*",
+      "delay",
+      "wait"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "gpio",
+    "name": "switch",
+    "method": "POST",
+    "path": "/api/gpio/switch",
+    "description": "Switch",
+    "parameters": [
+      "channel*",
+      "state*",
+      "wait"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/hid",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "key",
+    "method": "POST",
+    "path": "/api/hid/events/send_key",
+    "description": "Key",
+    "parameters": [
+      "finish",
+      "key*",
+      "state"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "button",
+    "method": "POST",
+    "path": "/api/hid/events/send_mouse_button",
+    "description": "Button",
+    "parameters": [
+      "button*",
+      "state"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "move",
+    "method": "POST",
+    "path": "/api/hid/events/send_mouse_move",
+    "description": "Move",
+    "parameters": [
+      "to_x*",
+      "to_y*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "relative",
+    "method": "POST",
+    "path": "/api/hid/events/send_mouse_relative",
+    "description": "Relative",
+    "parameters": [
+      "delta_x*",
+      "delta_y*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "wheel",
+    "method": "POST",
+    "path": "/api/hid/events/send_mouse_wheel",
+    "description": "Wheel",
+    "parameters": [
+      "delta_x*",
+      "delta_y*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "shortcut",
+    "method": "POST",
+    "path": "/api/hid/events/send_shortcut",
+    "description": "Shortcut",
+    "parameters": [
+      "keys*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "inactivity",
+    "method": "GET",
+    "path": "/api/hid/inactivity",
+    "description": "Inactivity",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "keymaps",
+    "method": "GET",
+    "path": "/api/hid/keymaps",
+    "description": "Keymaps",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "type",
+    "method": "POST",
+    "path": "/api/hid/print",
+    "description": "Type",
+    "parameters": [
+      "delay",
+      "keymap",
+      "limit",
+      "slow"
+    ],
+    "body_parameters": [],
+    "content_type": "text/plain; charset=utf-8",
+    "body_required": true,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "reset",
+    "method": "POST",
+    "path": "/api/hid/reset",
+    "description": "Reset",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "connect",
+    "method": "POST",
+    "path": "/api/hid/set_connected",
+    "description": "Connect",
+    "parameters": [
+      "connected*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "hid",
+    "name": "params",
+    "method": "POST",
+    "path": "/api/hid/set_params",
+    "description": "Params",
+    "parameters": [
+      "jiggler",
+      "keyboard_output",
+      "mouse_output"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "system",
+    "name": "info",
+    "method": "GET",
+    "path": "/api/info",
+    "description": "Get system information",
+    "parameters": [
+      "fields",
+      "legacy"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "system",
+    "name": "log",
+    "method": "GET",
+    "path": "/api/log",
+    "description": "Read service logs",
+    "parameters": [
+      "follow",
+      "seek"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "media",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/media",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "media",
+    "name": "connect",
+    "method": "GET",
+    "path": "/api/media/ws",
+    "description": "Connect",
+    "parameters": [
+      "video"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": true
+  },
+  {
+    "group": "msd",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/msd",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "download",
+    "method": "GET",
+    "path": "/api/msd/read",
+    "description": "Download",
+    "parameters": [
+      "compress",
+      "image*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "remove",
+    "method": "POST",
+    "path": "/api/msd/remove",
+    "description": "Remove",
+    "parameters": [
+      "image*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "reset",
+    "method": "POST",
+    "path": "/api/msd/reset",
+    "description": "Reset",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "connect",
+    "method": "POST",
+    "path": "/api/msd/set_connected",
+    "description": "Connect",
+    "parameters": [
+      "connected*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "params",
+    "method": "POST",
+    "path": "/api/msd/set_params",
+    "description": "Params",
+    "parameters": [
+      "cdrom",
+      "guess",
+      "image",
+      "passwd",
+      "retries_delay",
+      "rw",
+      "timeout",
+      "user",
+      "verify"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "upload",
+    "method": "POST",
+    "path": "/api/msd/write",
+    "description": "Upload",
+    "parameters": [
+      "activate",
+      "image*",
+      "prefix",
+      "remove_incomplete"
+    ],
+    "body_parameters": [],
+    "content_type": "application/octet-stream",
+    "body_required": true,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "msd",
+    "name": "fetch",
+    "method": "POST",
+    "path": "/api/msd/write_remote",
+    "description": "Fetch",
+    "parameters": [
+      "activate",
+      "image",
+      "insecure",
+      "prefix",
+      "remove_incomplete",
+      "timeout",
+      "url*",
+      "verify"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/streamer",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "ocr",
+    "method": "GET",
+    "path": "/api/streamer/ocr",
+    "description": "Ocr",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "reset",
+    "method": "POST",
+    "path": "/api/streamer/reset",
+    "description": "Reset",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "params",
+    "method": "POST",
+    "path": "/api/streamer/set_params",
+    "description": "Params",
+    "parameters": [
+      "desired_fps",
+      "h264_bitrate",
+      "h264_gop",
+      "quality",
+      "resolution"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "remove-snapshot",
+    "method": "DELETE",
+    "path": "/api/streamer/snapshot",
+    "description": "Remove snapshot",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "streamer",
+    "name": "snapshot",
+    "method": "GET",
+    "path": "/api/streamer/snapshot",
+    "description": "Snapshot",
+    "parameters": [
+      "allow_offline",
+      "load",
+      "ocr",
+      "ocr_bottom",
+      "ocr_langs",
+      "ocr_left",
+      "ocr_right",
+      "ocr_top",
+      "preview",
+      "preview_max_height",
+      "preview_max_width",
+      "preview_quality",
+      "save"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "state",
+    "method": "GET",
+    "path": "/api/switch",
+    "description": "State",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "click",
+    "method": "POST",
+    "path": "/api/switch/atx/click",
+    "description": "Click",
+    "parameters": [
+      "button*",
+      "port*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "power",
+    "method": "POST",
+    "path": "/api/switch/atx/power",
+    "description": "Power",
+    "parameters": [
+      "action*",
+      "port*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "edid-change",
+    "method": "POST",
+    "path": "/api/switch/edids/change",
+    "description": "Edid change",
+    "parameters": [
+      "data",
+      "id*",
+      "name"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "edid-create",
+    "method": "POST",
+    "path": "/api/switch/edids/create",
+    "description": "Edid create",
+    "parameters": [
+      "data*",
+      "name*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "edid-remove",
+    "method": "POST",
+    "path": "/api/switch/edids/remove",
+    "description": "Edid remove",
+    "parameters": [
+      "id*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "reset",
+    "method": "POST",
+    "path": "/api/switch/reset",
+    "description": "Reset",
+    "parameters": [
+      "bootloader",
+      "unit*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "active",
+    "method": "POST",
+    "path": "/api/switch/set_active",
+    "description": "Active",
+    "parameters": [
+      "port*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "next",
+    "method": "POST",
+    "path": "/api/switch/set_active_next",
+    "description": "Next",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "previous",
+    "method": "POST",
+    "path": "/api/switch/set_active_prev",
+    "description": "Previous",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "beacon",
+    "method": "POST",
+    "path": "/api/switch/set_beacon",
+    "description": "Beacon",
+    "parameters": [
+      "downlink",
+      "port",
+      "state*",
+      "uplink"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "colors",
+    "method": "POST",
+    "path": "/api/switch/set_colors",
+    "description": "Colors",
+    "parameters": [
+      "active",
+      "beacon",
+      "bootloader",
+      "flashing",
+      "inactive"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "switch",
+    "name": "port",
+    "method": "POST",
+    "path": "/api/switch/set_port_params",
+    "description": "Port",
+    "parameters": [
+      "atx_click_power_delay",
+      "atx_click_power_long_delay",
+      "atx_click_reset_delay",
+      "dummy",
+      "edid_id",
+      "name",
+      "port*"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "events",
+    "name": "connect",
+    "method": "GET",
+    "path": "/api/ws",
+    "description": "Connect",
+    "parameters": [
+      "stream"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": true
+  },
+  {
+    "group": "redfish",
+    "name": "root",
+    "method": "GET",
+    "path": "/redfish/v1",
+    "description": "Root",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "managers",
+    "method": "GET",
+    "path": "/redfish/v1/Managers",
+    "description": "Managers",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "manager",
+    "method": "GET",
+    "path": "/redfish/v1/Managers/BMC",
+    "description": "Manager",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "virtual-media",
+    "method": "GET",
+    "path": "/redfish/v1/Managers/BMC/VirtualMedia",
+    "description": "Virtual media",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "media",
+    "method": "GET",
+    "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD",
+    "description": "Media",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "eject",
+    "method": "POST",
+    "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD/Actions/VirtualMedia.EjectMedia",
+    "description": "Eject",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "insert",
+    "method": "POST",
+    "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD/Actions/VirtualMedia.InsertMedia",
+    "description": "Insert",
+    "parameters": [],
+    "body_parameters": [
+      {
+        "name": "Image",
+        "flag": "image",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "Inserted",
+        "flag": "inserted",
+        "type": "bool",
+        "required": false
+      },
+      {
+        "name": "Oem.PiKVM.DriveOptical",
+        "flag": "drive-optical",
+        "type": "bool",
+        "required": false
+      },
+      {
+        "name": "Password",
+        "flag": "media-password",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "UserName",
+        "flag": "username",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "VerifyCertificate",
+        "flag": "verify-certificate",
+        "type": "bool",
+        "required": false
+      },
+      {
+        "name": "WriteProtected",
+        "flag": "write-protected",
+        "type": "bool",
+        "required": false
+      }
+    ],
+    "content_type": "application/json",
+    "body_required": true,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "systems",
+    "method": "GET",
+    "path": "/redfish/v1/Systems",
+    "description": "Systems",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "system",
+    "method": "GET",
+    "path": "/redfish/v1/Systems/{id}",
+    "description": "System",
+    "parameters": [
+      "id"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "update",
+    "method": "PATCH",
+    "path": "/redfish/v1/Systems/{id}",
+    "description": "Update",
+    "parameters": [
+      "id"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "redfish",
+    "name": "power",
+    "method": "POST",
+    "path": "/redfish/v1/Systems/{id}/Actions/ComputerSystem.Reset",
+    "description": "Power",
+    "parameters": [
+      "id"
+    ],
+    "body_parameters": [
+      {
+        "name": "ResetType",
+        "flag": "reset-type",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "content_type": "application/json",
+    "body_required": true,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "video",
+    "name": "state",
+    "method": "GET",
+    "path": "/streamer/state",
+    "description": "uStreamer state",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": false,
+    "websocket": false
+  },
+  {
+    "group": "video",
+    "name": "snapshot",
+    "method": "GET",
+    "path": "/streamer/snapshot",
+    "description": "uStreamer snapshot",
+    "parameters": [],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "video",
+    "name": "mjpeg",
+    "method": "GET",
+    "path": "/streamer/stream",
+    "description": "uStreamer mjpeg",
+    "parameters": [
+      "key",
+      "extra_headers",
+      "advance_headers",
+      "dual_final_frames",
+      "zero_data"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  },
+  {
+    "group": "video",
+    "name": "compat",
+    "method": "GET",
+    "path": "/streamer",
+    "description": "uStreamer MJPG-Streamer compatibility API",
+    "parameters": [
+      "action",
+      "key",
+      "extra_headers",
+      "advance_headers",
+      "dual_final_frames",
+      "zero_data"
+    ],
+    "body_parameters": [],
+    "content_type": "",
+    "body_required": false,
+    "stream_response": true,
+    "websocket": false
+  }
+]

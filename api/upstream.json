@@ -1,0 +1,734 @@
+{
+  "repository": "https://github.com/pikvm/kvmd",
+  "commit": "fe26d028fc493942e2f951f8cd487cd5163238e3",
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/alerts",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/alerts.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/alerts/ack",
+      "location": "query",
+      "parameters": [
+        "alerts"
+      ],
+      "source": "kvmd/apps/kvmd/api/alerts.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/atx",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/atx.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/atx/click",
+      "location": "query",
+      "parameters": [
+        "button",
+        "wait"
+      ],
+      "source": "kvmd/apps/kvmd/api/atx.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/atx/power",
+      "location": "query",
+      "parameters": [
+        "action",
+        "wait"
+      ],
+      "source": "kvmd/apps/kvmd/api/atx.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/check",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/auth.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "location": "form",
+      "parameters": [
+        "expire",
+        "passwd",
+        "redirect",
+        "user"
+      ],
+      "source": "kvmd/apps/kvmd/api/auth.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/auth.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/export/prometheus/metrics",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/export.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/gpio",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/ugpio.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gpio/pulse",
+      "location": "query",
+      "parameters": [
+        "channel",
+        "delay",
+        "wait"
+      ],
+      "source": "kvmd/apps/kvmd/api/ugpio.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/gpio/switch",
+      "location": "query",
+      "parameters": [
+        "channel",
+        "state",
+        "wait"
+      ],
+      "source": "kvmd/apps/kvmd/api/ugpio.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/hid",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_key",
+      "location": "query",
+      "parameters": [
+        "finish",
+        "key",
+        "state"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_mouse_button",
+      "location": "query",
+      "parameters": [
+        "button",
+        "state"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_mouse_move",
+      "location": "query",
+      "parameters": [
+        "to_x",
+        "to_y"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_mouse_relative",
+      "location": "query",
+      "parameters": [
+        "delta_x",
+        "delta_y"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_mouse_wheel",
+      "location": "query",
+      "parameters": [
+        "delta_x",
+        "delta_y"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/events/send_shortcut",
+      "location": "query",
+      "parameters": [
+        "keys"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/hid/inactivity",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/hid/keymaps",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/print",
+      "location": "query",
+      "parameters": [
+        "delay",
+        "keymap",
+        "limit",
+        "slow"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/reset",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/set_connected",
+      "location": "query",
+      "parameters": [
+        "connected"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/hid/set_params",
+      "location": "query",
+      "parameters": [
+        "jiggler",
+        "keyboard_output",
+        "mouse_output"
+      ],
+      "source": "kvmd/apps/kvmd/api/hid.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/info",
+      "location": "query",
+      "parameters": [
+        "fields",
+        "legacy"
+      ],
+      "source": "kvmd/apps/kvmd/api/info.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/log",
+      "location": "query",
+      "parameters": [
+        "follow",
+        "seek"
+      ],
+      "source": "kvmd/apps/kvmd/api/log.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/media",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/media/server.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/media/ws",
+      "location": "query",
+      "parameters": [
+        "video"
+      ],
+      "source": "kvmd/apps/media/server.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/msd",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/msd/read",
+      "location": "query",
+      "parameters": [
+        "compress",
+        "image"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/remove",
+      "location": "query",
+      "parameters": [
+        "image"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/reset",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/set_connected",
+      "location": "query",
+      "parameters": [
+        "connected"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/set_params",
+      "location": "query",
+      "parameters": [
+        "cdrom",
+        "guess",
+        "image",
+        "passwd",
+        "retries_delay",
+        "rw",
+        "timeout",
+        "user",
+        "verify"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/write",
+      "location": "query",
+      "parameters": [
+        "activate",
+        "image",
+        "prefix",
+        "remove_incomplete"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/msd/write_remote",
+      "location": "query",
+      "parameters": [
+        "activate",
+        "image",
+        "insecure",
+        "prefix",
+        "remove_incomplete",
+        "timeout",
+        "url",
+        "verify"
+      ],
+      "source": "kvmd/apps/kvmd/api/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streamer",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/streamer.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streamer/ocr",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/streamer.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/streamer/reset",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/server.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/streamer/set_params",
+      "location": "query",
+      "parameters": [
+        "desired_fps",
+        "h264_bitrate",
+        "h264_gop",
+        "quality",
+        "resolution"
+      ],
+      "source": "kvmd/apps/kvmd/server.py"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/streamer/snapshot",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/streamer.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streamer/snapshot",
+      "location": "query",
+      "parameters": [
+        "allow_offline",
+        "load",
+        "ocr",
+        "ocr_bottom",
+        "ocr_langs",
+        "ocr_left",
+        "ocr_right",
+        "ocr_top",
+        "preview",
+        "preview_max_height",
+        "preview_max_width",
+        "preview_quality",
+        "save"
+      ],
+      "source": "kvmd/apps/kvmd/api/streamer.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/switch",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/atx/click",
+      "location": "query",
+      "parameters": [
+        "button",
+        "port"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/atx/power",
+      "location": "query",
+      "parameters": [
+        "action",
+        "port"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/edids/change",
+      "location": "query",
+      "parameters": [
+        "data",
+        "id",
+        "name"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/edids/create",
+      "location": "query",
+      "parameters": [
+        "data",
+        "name"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/edids/remove",
+      "location": "query",
+      "parameters": [
+        "id"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/reset",
+      "location": "query",
+      "parameters": [
+        "bootloader",
+        "unit"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_active",
+      "location": "query",
+      "parameters": [
+        "port"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_active_next",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_active_prev",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_beacon",
+      "location": "query",
+      "parameters": [
+        "downlink",
+        "port",
+        "state",
+        "uplink"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_colors",
+      "location": "query",
+      "parameters": [
+        "active",
+        "beacon",
+        "bootloader",
+        "flashing",
+        "inactive"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "POST",
+      "path": "/api/switch/set_port_params",
+      "location": "query",
+      "parameters": [
+        "atx_click_power_delay",
+        "atx_click_power_long_delay",
+        "atx_click_reset_delay",
+        "dummy",
+        "edid_id",
+        "name",
+        "port"
+      ],
+      "source": "kvmd/apps/kvmd/api/switch.py"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ws",
+      "location": "query",
+      "parameters": [
+        "stream"
+      ],
+      "source": "kvmd/apps/kvmd/server.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/root.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Managers",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Managers/BMC",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Managers/BMC/VirtualMedia",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD/Actions/VirtualMedia.EjectMedia",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "POST",
+      "path": "/redfish/v1/Managers/BMC/VirtualMedia/MSD/Actions/VirtualMedia.InsertMedia",
+      "location": "json",
+      "parameters": [
+        "Image",
+        "Inserted",
+        "Oem.PiKVM.DriveOptical",
+        "Password",
+        "UserName",
+        "VerifyCertificate",
+        "WriteProtected"
+      ],
+      "source": "kvmd/apps/kvmd/api/redfish/msd.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Systems",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/atx.py"
+    },
+    {
+      "method": "GET",
+      "path": "/redfish/v1/Systems/{id}",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/atx.py"
+    },
+    {
+      "method": "PATCH",
+      "path": "/redfish/v1/Systems/{id}",
+      "location": "query",
+      "parameters": [],
+      "source": "kvmd/apps/kvmd/api/redfish/atx.py"
+    },
+    {
+      "method": "POST",
+      "path": "/redfish/v1/Systems/{id}/Actions/ComputerSystem.Reset",
+      "location": "json",
+      "parameters": [
+        "ResetType"
+      ],
+      "source": "kvmd/apps/kvmd/api/redfish/atx.py"
+    }
+  ],
+  "websocket_handlers": [
+    {
+      "path": "/api/media/ws",
+      "selector": 0,
+      "source": "kvmd/apps/media/server.py",
+      "handler_sha256": "2cfd8fd41c2dc3dade1636c38d7be5d2800739874e5d71e9aca2687026b1a397"
+    },
+    {
+      "path": "/api/media/ws",
+      "selector": 1,
+      "source": "kvmd/apps/media/server.py",
+      "handler_sha256": "8ced8dddb9de118e35286e7167e8a145591b55acbe3a5c533fb5d6289c9613c6"
+    },
+    {
+      "path": "/api/media/ws",
+      "selector": "start",
+      "source": "kvmd/apps/media/server.py",
+      "handler_sha256": "e07524a6a068389f866010c77902fae724db79269a38543b0d933da1ca77bf9b"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 0,
+      "source": "kvmd/apps/kvmd/server.py",
+      "handler_sha256": "8d4fb4c0b172d5ab83ad69698978a4dece9129298ec26c3c341d189ae31d0a49"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 1,
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "8364d9d4de6c39b37cd3f2cfadb240b2ab4c7948293b6de7d0c655b325bc2571"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 2,
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "f4c2fc63d7c0a1f0e23d5466f9a14726c2e8d2a8b118d25eb5b2eee532b623a7"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 3,
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "20ab747e1b035db6f31e3e4be7e90be61d0911e68fbe6adbbb7058b3df127507"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 4,
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "8e2eca9ddb4ead30f4647d3e4d90066e19404e659dce88a5137633cc760822aa"
+    },
+    {
+      "path": "/api/ws",
+      "selector": 5,
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "c05f3bc1bd7832052bed487d6a396aad99b58f68da0ef959950ffafba4983c56"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "key",
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "71d84ec1b57e1e88ff299c5d17dadb607c06fd740ec46e05a553b26c8686c778"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "mouse_button",
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "6e834e66fede4bcad1d28097379ed71eaa4976b08a3264008ab1b749eefc0671"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "mouse_move",
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "af126b41c20d0dd13e92d86c7371fc0c4dd97cc3f2a62cd1f47c2be91aad819f"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "mouse_relative",
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "20fefd975f7138aea6006e9be6d5ea550ecfa210d3bcf1de226422799a818f47"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "mouse_wheel",
+      "source": "kvmd/apps/kvmd/api/hid.py",
+      "handler_sha256": "49f0ffac114cd374f09b4caad02708ee3b3183c7b01f7cd123cb084677f5fd2a"
+    },
+    {
+      "path": "/api/ws",
+      "selector": "ping",
+      "source": "kvmd/apps/kvmd/server.py",
+      "handler_sha256": "0c130fec79d8452919d8f138dd7e4b3b5a6841cd5e8e0ebd0f8d1e16e22b4fca"
+    }
+  ]
+}

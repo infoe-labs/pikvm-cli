@@ -1,0 +1,7 @@
+/bin/
+/coverage.out
+__pycache__/
+.env
+.env.*
+*.test
+/pikvm-cli
