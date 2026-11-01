@@ -1,0 +1,68 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RELEASE_VERSION: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: stable
+      - name: Require a semantic version tag from main history
+        run: |
+          python3 -c 'import importlib.util,os; s=importlib.util.spec_from_file_location("release","scripts/build-release.py"); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.validate_version(os.environ["RELEASE_VERSION"])'
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - run: python3 scripts/generate-api.py --check
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
+      - run: go test -race -coverpkg=./cli,./lib/pikvm,./mcpserver -covermode=atomic -coverprofile=coverage.out ./...
+      - run: python3 scripts/check-coverage.py coverage.out
+      - run: go vet ./...
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_VERSION: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: stable
+      - run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - run: python3 scripts/build-release.py --version "$RELEASE_VERSION" --output dist
+      - run: python3 scripts/homebrew-formula.py --version "$RELEASE_VERSION" --checksums dist/SHA256SUMS --output dist/pikvm-cli.rb
+      - name: Include the formula checksum
+        run: python3 -c 'import hashlib,pathlib; p=pathlib.Path("dist/pikvm-cli.rb"); f=pathlib.Path("dist/SHA256SUMS"); f.write_text(f.read_text()+hashlib.sha256(p.read_bytes()).hexdigest()+"  "+p.name+"\n")'
+      - name: Create a draft with the verified assets
+        run: gh release create "$RELEASE_VERSION" dist/* --verify-tag --draft --title "$RELEASE_VERSION" --notes-file .github/release-notes.md
+      - name: Download and verify every uploaded asset before publishing
+        run: |
+          gh release download "$RELEASE_VERSION" --dir "$RUNNER_TEMP/release-verification"
+          cd "$RUNNER_TEMP/release-verification"
+          sha256sum -c SHA256SUMS
+      - name: Publish the verified release
+        run: |
+          if [[ "$RELEASE_VERSION" == *-* ]]; then
+            gh release edit "$RELEASE_VERSION" --draft=false --prerelease
+          else
+            gh release edit "$RELEASE_VERSION" --draft=false --latest
+          fi

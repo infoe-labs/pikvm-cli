@@ -9,17 +9,57 @@ concurrency:
   group: build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  build:
+  unit:
+    strategy:
+      matrix:
+        go: ["1.25.x", stable]
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: stable
+          go-version: ${{ matrix.go }}
       - run: python3 scripts/generate-api.py --check
-      - run: go test -race ./...
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
+      - run: go test -race -coverpkg=./cli,./lib/pikvm,./mcpserver -covermode=atomic -coverprofile=coverage.out ./...
+      - run: python3 scripts/check-coverage.py coverage.out --summary "$GITHUB_STEP_SUMMARY"
+      - run: go test -tags integration ./integration -run '^TestLivePiKVMReadOnly$' -v
       - run: go vet ./...
       - run: go build -o bin/pikvm-cli ./cmd/pikvm-cli
+      - run: go build -o bin/pikvm-cli-source main.go
+  homebrew:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install and test this checkout as a Homebrew tap
+        run: |
+          brew tap infoe-labs/pikvm-cli "$GITHUB_WORKSPACE"
+          if grep -q '^  head ' Formula/pikvm-cli.rb; then
+            brew install --HEAD infoe-labs/pikvm-cli/pikvm-cli
+          else
+            brew install infoe-labs/pikvm-cli/pikvm-cli
+          fi
+          brew test infoe-labs/pikvm-cli/pikvm-cli
+          pikvm-cli --help
+  build:
+    if: always()
+    needs: [unit, homebrew]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    env:
+      UNIT_RESULT: ${{ needs.unit.result }}
+      HOMEBREW_RESULT: ${{ needs.homebrew.result }}
+    steps:
+      - name: Require every test and Homebrew check to pass
+        run: |
+          test "$UNIT_RESULT" = success
+          test "$HOMEBREW_RESULT" = success

@@ -1,6 +1,15 @@
 # pikvm-cli
 
-A reusable Go client for the PiKVM REST and WebSocket APIs, with a Cobra CLI for people and agents.
+A reusable Go client for the PiKVM REST and WebSocket APIs, with a Cobra CLI and MCP server for people and agents.
+
+[Binary releases](https://github.com/infoe-labs/pikvm-cli/releases) · [Tests and coverage](docs/TESTING.md) · [MCP setup](docs/MCP.md) · [Homebrew/release guide](docs/RELEASES.md)
+
+```sh
+brew tap infoe-labs/pikvm-cli https://github.com/infoe-labs/pikvm-cli
+brew install infoe-labs/pikvm-cli/pikvm-cli
+```
+
+Before the first stable formula is promoted, use `brew install --HEAD infoe-labs/pikvm-cli/pikvm-cli`.
 
 The [API coverage reference](api/COVERAGE.md) lists all 72 audited routes and their CLI equivalents. Tests check every route and parameter against an independently extracted upstream inventory, then exercise every library service method and CLI command on the wire.
 
@@ -9,13 +18,15 @@ The library is independent of Cobra, environment variables, and process state. A
 ```
 lib/pikvm/        Importable REST client and service methods
 cli/             Cobra command tree
-cmd/pikvm-cli/   Executable entry point
+cmd/pikvm-cli/   Installed executable entry point
+main.go          Source entry point: go run main.go mcp
+mcpserver/       Official MCP SDK adapter over the shared client
 examples/library/ Standalone Go consumer
 ```
 
 ## Use from another Go service
 
-After this repository is published:
+Import the published library:
 
 ```sh
 go get github.com/infoe-labs/pikvm-cli/lib/pikvm
@@ -78,14 +89,14 @@ go get github.com/infoe-labs/pikvm-cli/lib/pikvm
 
 ## Build and run
 
-Go 1.23 or newer:
+Go 1.25 or newer (required by the official MCP SDK):
 
 ```sh
 go build -o bin/pikvm-cli ./cmd/pikvm-cli
 ./bin/pikvm-cli --help
 ```
 
-After publication, install with:
+Install from source with:
 
 ```sh
 go install github.com/infoe-labs/pikvm-cli/cmd/pikvm-cli@latest
@@ -186,7 +197,8 @@ Go services can use `client.Events().Connect(ctx, options)` or `client.Media().C
 The inventory covers main KVMD, KVMD-Media, and uStreamer HTTP APIs exposed through standard PiKVM Nginx. The separate Janus WebRTC signaling API, optional third-party extras, and internal Unix-socket daemons are outside this inventory. Snapshot availability depends on the device's streamer configuration; an unavailable stream can return HTTP 503. Device firmware and hardware determine which endpoints and parameters are supported. Endpoint/parameter coverage does not imply 100% code coverage or physical hardware verification.
 
 ```sh
-go test -race ./...
+go test -race -coverpkg=./cli,./lib/pikvm,./mcpserver -covermode=atomic -coverprofile=coverage.out ./...
+python3 scripts/check-coverage.py coverage.out
 go vet ./...
 python3 scripts/generate-api.py --check
 # Optional: compare local checkouts of the official upstream projects.
@@ -198,3 +210,5 @@ Tests exercise HTTP authentication, sessions, request encoding, binary transfers
 References: [PiKVM HTTP API](https://docs.pikvm.org/api/), [guanana/pikvm-lib](https://github.com/guanana/pikvm-lib), and [PiKVM Remote Control skill](https://mcpmarket.com/tools/skills/pikvm-remote-control).
 
 Repository protection, CI, and publication conventions are documented in [docs/REPOSITORY_SETUP.md](docs/REPOSITORY_SETUP.md).
+
+Run `go run main.go mcp` or `pikvm-cli mcp` with the same PiKVM environment to expose the API over MCP stdio. The adapter reuses the library and API catalog; see [docs/MCP.md](docs/MCP.md) for tools, limits, and client configuration.
