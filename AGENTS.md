@@ -2,7 +2,9 @@
 
 Build a reusable Go library in `lib/pikvm` first. Keep Cobra and environment
 configuration in `cli`; `cmd/pikvm-cli` is the executable entry point. The library
-must remain importable by another Go service without depending on Cobra.
+must remain importable by another Go service without depending on Cobra or the MCP SDK.
+Keep MCP in `mcpserver`; reuse `Client.Invoke`, the catalog, progress parsing, and
+WebSocket methods rather than duplicating protocol implementations.
 
 ## API coverage
 
@@ -22,7 +24,9 @@ hardware limitations accurately.
 Required checks before delivery:
 
 - `python3 scripts/generate-api.py --check`
-- `go test -race ./...`
+- `python3 -m unittest discover -s scripts -p 'test_*.py'`
+- `go test -race -coverpkg=./cli,./lib/pikvm,./mcpserver -covermode=atomic -coverprofile=coverage.out ./...`
+- `python3 scripts/check-coverage.py coverage.out`
 - `go vet ./...`
 - `go build -o bin/pikvm-cli ./cmd/pikvm-cli`
 
@@ -72,3 +76,9 @@ Keep Actions tokens read-only and disallow Actions from creating/approving PRs.
 Run PR checks without production secrets or deployment permissions. Verify server
 settings and actual remote check/commit results after publication; configuration
 requests alone are not verification. This repository has no production deployment.
+
+Core packages must meet the 90% total and handwritten statement-coverage floors.
+Run default integration tests only against synthetic local servers. Real-device
+tests require the integration build tag and explicit PIKVM_LIVE_TESTS=1 opt-in.
+Binary releases use reviewed main-history version tags, draft asset verification,
+and scoped publish permissions. Promote Homebrew formulas through protected PRs.

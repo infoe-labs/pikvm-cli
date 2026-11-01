@@ -18,20 +18,12 @@ func runEndpoint(cmd *cobra.Command, cfg pikvm.Config, ep pikvm.Endpoint) error 
 		return err
 	}
 	q := url.Values{}
-	path := ep.Path
-	for _, param := range ep.Parameters {
-		name := strings.TrimSuffix(param, "*")
+	for _, parameter := range ep.Parameters {
+		name := strings.TrimSuffix(parameter, "*")
 		flag := ep.QueryFlag(name)
-		v, _ := cmd.Flags().GetString(flag)
-		if name == "id" && strings.Contains(path, "{id}") {
-			if v == "" || strings.ContainsAny(v, "/?#") {
-				return fmt.Errorf("invalid system id")
-			}
-			path = strings.ReplaceAll(path, "{id}", url.PathEscape(v))
-			continue
-		}
-		if cmd.Flags().Changed(flag) {
-			q.Set(name, v)
+		if cmd.Flags().Changed(flag) || name == "id" && strings.Contains(ep.Path, "{id}") {
+			value, _ := cmd.Flags().GetString(flag)
+			q.Set(name, value)
 		}
 	}
 	input, _ := cmd.Flags().GetString("input")
@@ -43,60 +35,28 @@ func runEndpoint(cmd *cobra.Command, cfg pikvm.Config, ep pikvm.Endpoint) error 
 		return err
 	}
 	defer closeBody()
-	ct := ep.ContentType
-	if len(ep.BodyParameters) > 0 {
-		fields := map[string]any{}
-		form := url.Values{}
-		if ep.Group == "auth" {
-			form.Set("user", cfg.Username)
-			form.Set("passwd", cfg.Password)
-		}
-		for _, param := range ep.BodyParameters {
-			changed := cmd.Flags().Changed(param.Flag)
-			if explicit && changed {
-				return fmt.Errorf("--%s cannot be combined with --body or --input", param.Flag)
-			}
-			if explicit {
-				continue
-			}
-			if param.Required && !changed {
-				return fmt.Errorf("--%s is required unless --body or --input is provided", param.Flag)
-			}
-			if !changed {
-				continue
-			}
-			v, _ := cmd.Flags().GetString(param.Flag)
-			if ct == "application/x-www-form-urlencoded" {
-				form.Set(param.Name, v)
-				continue
-			}
-			var value any = v
-			if param.Type == "bool" {
-				value, err = parseAPIBool(v)
-				if err != nil {
-					return fmt.Errorf("--%s expects a boolean value", param.Flag)
-				}
-			}
-			setJSONField(fields, param.Name, value)
-		}
-		if !explicit {
-			if ct == "application/x-www-form-urlencoded" {
-				body = strings.NewReader(form.Encode())
-			} else {
-				encoded, e := json.Marshal(fields)
-				if e != nil {
-					return e
-				}
-				body = strings.NewReader(string(encoded))
-			}
-		}
-	} else if ep.BodyRequired && !explicit {
-		return fmt.Errorf("this operation requires --body or --input")
+	if explicit && body == nil {
+		body = strings.NewReader("")
 	}
-	if ct == "" && explicit {
-		ct = "application/json"
+	fields := map[string]any{}
+	for _, parameter := range ep.BodyParameters {
+		if !cmd.Flags().Changed(parameter.Flag) {
+			continue
+		}
+		if explicit {
+			return fmt.Errorf("--%s cannot be combined with --body or --input", parameter.Flag)
+		}
+		value, _ := cmd.Flags().GetString(parameter.Flag)
+		var field any = value
+		if parameter.Type == "bool" {
+			field, err = parseAPIBool(value)
+			if err != nil {
+				return fmt.Errorf("--%s expects a boolean value", parameter.Flag)
+			}
+		}
+		fields[parameter.Name] = field
 	}
-	resp, err := client.Request(cmd.Context(), ep.Method, path, q, body, ct)
+	resp, err := client.Invoke(cmd.Context(), ep, pikvm.OperationInput{Parameters: q, Fields: fields, Body: body})
 	if err != nil {
 		return err
 	}
@@ -116,18 +76,6 @@ func runEndpoint(cmd *cobra.Command, cfg pikvm.Config, ep pikvm.Endpoint) error 
 		}
 	}
 	return writeResponse(cmd, resp, output)
-}
-func setJSONField(dst map[string]any, path string, value any) {
-	parts := strings.Split(path, ".")
-	for _, part := range parts[:len(parts)-1] {
-		next, ok := dst[part].(map[string]any)
-		if !ok {
-			next = map[string]any{}
-			dst[part] = next
-		}
-		dst = next
-	}
-	dst[parts[len(parts)-1]] = value
 }
 func parseAPIBool(value string) (bool, error) {
 	switch strings.ToLower(value) {

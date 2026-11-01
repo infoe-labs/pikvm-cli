@@ -2,7 +2,6 @@
 package cli
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,6 +12,8 @@ import (
 	"time"
 
 	"github.com/infoe-labs/pikvm-cli/lib/pikvm"
+	"github.com/infoe-labs/pikvm-cli/mcpserver"
+	sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/spf13/cobra"
 )
 
@@ -101,6 +102,14 @@ func NewRootCommand() *cobra.Command {
 	raw.Flags().StringVarP(&output, "output", "o", "", "Response file or - for stdout")
 	raw.Flags().StringVar(&contentType, "content-type", "application/json", "Request content type")
 	root.AddCommand(raw)
+	root.AddCommand(&cobra.Command{Use: "mcp", Short: "Serve the PiKVM API over MCP stdio using the configured environment", Args: cobra.NoArgs, RunE: func(cmd *cobra.Command, args []string) error {
+		client, err := newClient(cfg)
+		if err != nil {
+			return err
+		}
+		server := mcpserver.New(client, cmd.Root().Version)
+		return server.Run(cmd.Context(), &sdk.IOTransport{Reader: io.NopCloser(cmd.InOrStdin()), Writer: nopWriteCloser{cmd.OutOrStdout()}})
+	}})
 	return root
 }
 func newClient(cfg pikvm.Config) (*pikvm.Client, error) {
@@ -164,31 +173,8 @@ func writeResponse(cmd *cobra.Command, r *http.Response, path string) error {
 }
 
 // copyNDJSON relays every progress record and surfaces late server failures.
-func copyNDJSON(dst io.Writer, src io.Reader) error {
-	reader := bufio.NewReader(src)
-	var failed bool
-	for {
-		line, err := reader.ReadBytes('\n')
-		if len(line) > 0 {
-			if _, e := dst.Write(line); e != nil {
-				return e
-			}
-			var record struct {
-				OK *bool `json:"ok"`
-			}
-			if json.Unmarshal(line, &record) == nil && record.OK != nil && !*record.OK {
-				failed = true
-			}
-		}
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if failed {
-		return fmt.Errorf("PiKVM streaming operation failed; see response records")
-	}
-	return nil
-}
+func copyNDJSON(dst io.Writer, src io.Reader) error { return pikvm.CopyProgress(dst, src) }
+
+type nopWriteCloser struct{ io.Writer }
+
+func (nopWriteCloser) Close() error { return nil }
