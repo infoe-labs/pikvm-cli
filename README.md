@@ -9,7 +9,7 @@ brew tap infoe-labs/pikvm-cli https://github.com/infoe-labs/pikvm-cli
 brew install infoe-labs/pikvm-cli/pikvm-cli
 ```
 
-Before the first stable formula is promoted, use `brew install --HEAD infoe-labs/pikvm-cli/pikvm-cli`.
+The formula installs the verified `v0.1.0` release binary on macOS and Linux.
 
 The [API coverage reference](api/COVERAGE.md) lists all 72 audited routes and their CLI equivalents. Tests check every route and parameter against an independently extracted upstream inventory, then exercise every library service method and CLI command on the wire.
 
