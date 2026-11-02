@@ -82,3 +82,8 @@ Run default integration tests only against synthetic local servers. Real-device
 tests require the integration build tag and explicit PIKVM_LIVE_TESTS=1 opt-in.
 Binary releases use reviewed main-history version tags, draft asset verification,
 and scoped publish permissions. Promote Homebrew formulas through protected PRs.
+
+## Shared repository standards
+
+Read `docs/SHARED_STANDARDS.md` for the canonical infoe-labs guidelines.
+Preserve stronger project-specific privacy, review, test and release rules.
