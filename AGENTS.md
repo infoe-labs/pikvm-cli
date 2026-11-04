@@ -43,8 +43,10 @@ No telemetry, analytics, remote logging, or cloud processing. Network traffic is
 limited to the user-configured PiKVM origin; credentials must not follow redirects
 to another origin. Remote image fetching is an explicit user action on the device.
 Session cookies remain in memory. Seekable uploads stream directly; unknown-length
-uploads spool to a private temporary file and remove it afterward. Output files
-are written only when requested. Do not persist credentials or snapshots by default.
+uploads spool to a private temporary file and remove it afterward. Never enable or attach
+PiKVM mass storage (MSD/virtual media) without explicit user permission, since it is
+visible to the target host. Output files are written only when requested. Do not persist
+credentials or snapshots by default.
 Keep environment files, secrets, generated binaries, and test artifacts ignored.
 
 ## Git identity and delivery
