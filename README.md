@@ -178,6 +178,33 @@ pikvm-cli request POST /api/hid/events/send_key -q key=Enter
 
 Pass query parameters separately using repeatable `-q key=value`. Cobra also supplies shell completion through `pikvm-cli completion`.
 
+### Diagnostics
+
+`doctor` runs read-only health checks and exits nonzero when any check fails:
+
+```sh
+pikvm-cli doctor
+pikvm-cli doctor --json
+```
+
+It reports connectivity and authentication, the KVMD and uStreamer versions, HID readiness,
+USB power to the target, the live event stream, and which catalogued operations the connected
+firmware actually supports. Endpoint probing uses only `HEAD`, so a device that answers `405`
+for registered paths and `404` for absent ones is inventoried without executing a mutation
+such as attaching media or switching a KVM port. Operations with a parameterized path are
+reported as `unconfirmed` rather than missing, because a placeholder value may not match the
+device's own identifiers.
+
+Firmware commonly omits whole groups (alerts, media, and ATX switch control on many builds),
+which appear as `WARN` with names rather than as failures. A `WARN hid` naming an empty
+keyboard output channel means keystrokes are accepted by the device but may never reach the
+target host.
+
+`--test-input` is the only action that touches the target host. It presses one lock key, waits
+for the target to echo the corresponding LED back through the device, and then clears the key.
+A keystroke accepted by the device but never echoed by the target is reported as a failure,
+which is the only reliable way to tell a working HID path from one that silently drops input.
+
 ## Scope and verification
 
 Coverage is pinned to the official KVMD and uStreamer source revisions recorded in [api/COVERAGE.md](api/COVERAGE.md), including operations absent from the handbook. All known query parameters have named flags; login form and Redfish JSON fields also have named flags. For example:
