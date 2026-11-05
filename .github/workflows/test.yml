@@ -1,12 +1,16 @@
 name: Build
 on:
   push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: build-${{ github.workflow }}-${{ github.ref }}
+  # Key on the pull request number, not the shared branch ref, so the pull_request run
+  # for a branch is never cancelled by an unrelated push run for the same ref.
+  group: build-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   unit:
@@ -32,7 +36,9 @@ jobs:
       - run: go build -o bin/pikvm-cli-source main.go
   homebrew:
     runs-on: macos-latest
-    timeout-minutes: 15
+    # macOS runners can queue for a long time and queued time counts against this limit,
+    # which previously cancelled the job before its first step ran and failed the aggregate.
+    timeout-minutes: 30
     env:
       HOMEBREW_NO_AUTO_UPDATE: "1"
       HOMEBREW_NO_INSTALL_CLEANUP: "1"

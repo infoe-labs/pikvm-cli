@@ -110,8 +110,35 @@ Configure the connection using environment variables or the corresponding global
 | `PIKVM_USER` | `--user` | PiKVM username |
 | `PIKVM_PASSWORD` | `--password` | Password, including OTP when required |
 | `PIKVM_TOKEN` | `--token` | Session cookie token, preferred over user/password |
+| `PIKVM_INSECURE` | `--insecure` | Skip TLS verification for self-signed devices |
+| `PIKVM_AUTH_MODE` | `--auth-mode` | `headers` (default) or `basic` |
+| `PIKVM_REQUEST_TIMEOUT` | `--request-timeout` | Go duration such as `30s`; `0s` disables the timeout |
+| `PIKVM_ENV_FILE` | `--env-file` | dotenv path, defaulting to `./.env` |
 
-Prefer environment variables or your secret manager over credentials in shell arguments. Use `--insecure` explicitly for devices with self-signed certificates. `--request-timeout 0s` disables the HTTP timeout for long transfers; Ctrl-C still cancels the request.
+### Using a .env file
+
+By default the CLI reads `PIKVM_*` settings from a `.env` file in the current
+directory, so a device can be configured once and used without exporting anything:
+
+```sh
+# ./.env  (keep it out of version control and restrict it to its owner: chmod 600 .env)
+export PIKVM_URL=https://pikvm.example.com
+export PIKVM_USER=admin
+export PIKVM_PASSWORD=secret
+PIKVM_INSECURE=true
+```
+
+Values may be unquoted, single-quoted, or double-quoted (`\n`, `\t`, `\"` and similar
+escapes apply inside double quotes); `export` prefixes, blank lines and `#` comments are
+allowed. A malformed line fails fast and names the line and variable, never the value.
+
+Precedence is **explicit flag, then process environment, then the dotenv file**, so a real
+environment always overrides a file and a flag always overrides both. Resolution order for
+the file itself is `--env-file`, then `PIKVM_ENV_FILE`, then `./.env`; a missing file is not
+an error, and `--env-file ''` disables file loading entirely. `pikvm-cli mcp` resolves
+settings the same way.
+
+Prefer environment variables or your secret manager over credentials in shell arguments. Use `--insecure` or `PIKVM_INSECURE=true` only for devices with self-signed certificates; the CLI warns when the dotenv file is readable by group or others. `--request-timeout 0s` disables the HTTP timeout for long transfers; Ctrl-C still cancels the request.
 
 ```sh
 export PIKVM_URL=https://pikvm.example.com

@@ -139,7 +139,7 @@ func TestCLIValidationAndHTTPFailures(t *testing.T) {
 }
 
 func TestMain(m *testing.M) {
-	for _, name := range []string{"PIKVM_URL", "PIKVM_USER", "PIKVM_PASSWORD", "PIKVM_TOKEN"} {
+	for _, name := range []string{"PIKVM_URL", "PIKVM_USER", "PIKVM_PASSWORD", "PIKVM_TOKEN", "PIKVM_ENV_FILE", "PIKVM_INSECURE", "PIKVM_AUTH_MODE", "PIKVM_REQUEST_TIMEOUT"} {
 		_ = os.Unsetenv(name)
 	}
 	os.Exit(m.Run())

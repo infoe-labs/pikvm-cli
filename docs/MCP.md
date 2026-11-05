@@ -6,14 +6,17 @@ request encoder, streaming-progress parser, and WebSocket session methods as the
 CLI. It does not implement a second PiKVM transport or start an HTTP listener.
 
 ```sh
-# Supply PiKVM connection credentials through your environment/secret manager.
+# Connection settings come from the environment or a ./.env file.
 go run main.go mcp
 # Or use the installed/released binary:
 pikvm-cli mcp
 ```
 
-Both entry points read `PIKVM_URL`, `PIKVM_USER`, `PIKVM_PASSWORD`, and `PIKVM_TOKEN`.
-Global CLI flags, including `--insecure` and `--auth-mode basic`, also apply. Stdout
+Both entry points read `PIKVM_URL`, `PIKVM_USER`, `PIKVM_PASSWORD`, `PIKVM_TOKEN`,
+`PIKVM_INSECURE`, `PIKVM_AUTH_MODE` and `PIKVM_REQUEST_TIMEOUT`, from the environment or
+from the dotenv file selected by `--env-file`/`PIKVM_ENV_FILE` (default `./.env`). For a
+self-signed device set `PIKVM_INSECURE=true`, or pass `--insecure`. Global CLI flags also
+apply, and explicit flags always override both the environment and the dotenv file. Stdout
 contains only MCP protocol messages. Errors omit connection details and API payloads.
 
 Example client configuration using an already configured environment:

@@ -17,18 +17,21 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewRootCommand creates an independent command tree. Environment defaults use PIKVM_*.
+// NewRootCommand creates an independent command tree. Environment defaults use PIKVM_*
+// and may also be supplied by a dotenv file; explicit flags always take priority.
 func NewRootCommand() *cobra.Command {
 	cfg := pikvm.Config{URL: os.Getenv("PIKVM_URL"), Username: os.Getenv("PIKVM_USER"), Password: os.Getenv("PIKVM_PASSWORD"), Token: os.Getenv("PIKVM_TOKEN")}
-	root := &cobra.Command{Use: "pikvm-cli", Short: "Control PiKVM from terminals and automation", SilenceUsage: true, SilenceErrors: true}
+	var envFile string
+	root := &cobra.Command{Use: "pikvm-cli", Short: "Control PiKVM from terminals and automation", SilenceUsage: true, SilenceErrors: true, PersistentPreRunE: func(cmd *cobra.Command, args []string) error { return applyEnvSettings(cmd, &cfg, envFile) }}
 	f := root.PersistentFlags()
 	f.StringVar(&cfg.URL, "url", cfg.URL, "PiKVM base URL (PIKVM_URL)")
 	f.StringVar(&cfg.Username, "user", cfg.Username, "Username (PIKVM_USER)")
 	f.StringVar(&cfg.Password, "password", cfg.Password, "Password, including OTP if needed (PIKVM_PASSWORD)")
 	f.StringVar(&cfg.Token, "token", cfg.Token, "Session token (PIKVM_TOKEN)")
-	f.BoolVar(&cfg.Insecure, "insecure", false, "Disable TLS certificate verification")
-	f.DurationVar(&cfg.Timeout, "request-timeout", 30*time.Second, "HTTP timeout; use 0s for unbounded transfers")
-	f.StringVar(&cfg.AuthMode, "auth-mode", "headers", "Authentication mode: headers or basic")
+	f.StringVar(&envFile, envFileFlag, defaultEnvFile, "Read PIKVM_* settings from a dotenv file; pass an empty value to disable (PIKVM_ENV_FILE)")
+	f.BoolVar(&cfg.Insecure, "insecure", false, "Disable TLS certificate verification (PIKVM_INSECURE)")
+	f.DurationVar(&cfg.Timeout, "request-timeout", 30*time.Second, "HTTP timeout; use 0s for unbounded transfers (PIKVM_REQUEST_TIMEOUT)")
+	f.StringVar(&cfg.AuthMode, "auth-mode", "headers", "Authentication mode: headers or basic (PIKVM_AUTH_MODE)")
 	groups := map[string]*cobra.Command{}
 	for _, ep := range pikvm.Endpoints() {
 		group := groups[ep.Group]
