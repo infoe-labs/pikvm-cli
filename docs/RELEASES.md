@@ -42,6 +42,9 @@ macOS/Linux binaries and their recorded SHA256 checksums, without a Go build dep
 After a release, download and verify its assets with `gh release download`, copy the
 generated formula into `Formula/pikvm-cli.rb`, and submit a normal feature-branch PR.
 The Homebrew CI job installs and tests those actual binaries before the required
-`build` check passes. Merge the formula PR using the approved author identity.
+`build` check passes. To limit macOS runner usage, this job runs only on PRs that
+change `Formula/` and on manual Build workflow runs. Other PRs and pushes to main
+run the Linux checks; an intentional Homebrew skip still allows `build` to pass.
+Merge the formula PR using the approved author identity.
 Release automation deliberately does not push formula updates directly to main or
 create PRs, preserving the repository's protection and Actions policies.
