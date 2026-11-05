@@ -13,6 +13,33 @@ concurrency:
   group: build-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
+  homebrew-changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      required: ${{ github.event_name == 'workflow_dispatch' || steps.formula.outputs.changed == 'true' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Detect formula changes in the pull request
+        if: github.event_name == 'pull_request'
+        id: formula
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          if git diff --quiet --no-renames "$BASE_SHA" "$HEAD_SHA" -- Formula/; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            result=$?
+            if [ "$result" -ne 1 ]; then
+              exit "$result"
+            fi
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
   unit:
     strategy:
       matrix:
@@ -35,6 +62,9 @@ jobs:
       - run: go build -o bin/pikvm-cli ./cmd/pikvm-cli
       - run: go build -o bin/pikvm-cli-source main.go
   homebrew:
+    needs: homebrew-changes
+    # Keep native installation checks for formula PRs and explicit manual runs.
+    if: needs.homebrew-changes.outputs.required == 'true'
     runs-on: macos-latest
     # macOS runners can queue for a long time and queued time counts against this limit,
     # which previously cancelled the job before its first step ran and failed the aggregate.
@@ -58,14 +88,21 @@ jobs:
           pikvm-cli --help
   build:
     if: always()
-    needs: [unit, homebrew]
+    needs: [unit, homebrew-changes, homebrew]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     env:
       UNIT_RESULT: ${{ needs.unit.result }}
+      CHANGES_RESULT: ${{ needs.homebrew-changes.result }}
+      HOMEBREW_REQUIRED: ${{ needs.homebrew-changes.outputs.required }}
       HOMEBREW_RESULT: ${{ needs.homebrew.result }}
     steps:
-      - name: Require every test and Homebrew check to pass
+      - name: Require tests and any requested Homebrew check to pass
         run: |
           test "$UNIT_RESULT" = success
-          test "$HOMEBREW_RESULT" = success
+          test "$CHANGES_RESULT" = success
+          case "$HOMEBREW_REQUIRED" in
+            true) test "$HOMEBREW_RESULT" = success ;;
+            false) test "$HOMEBREW_RESULT" = skipped ;;
+            *) exit 1 ;;
+          esac
