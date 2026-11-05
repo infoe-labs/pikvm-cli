@@ -105,6 +105,7 @@ func NewRootCommand() *cobra.Command {
 	raw.Flags().StringVarP(&output, "output", "o", "", "Response file or - for stdout")
 	raw.Flags().StringVar(&contentType, "content-type", "application/json", "Request content type")
 	root.AddCommand(raw)
+	root.AddCommand(newDoctorCommand(&cfg))
 	root.AddCommand(&cobra.Command{Use: "mcp", Short: "Serve the PiKVM API over MCP stdio using the configured environment", Args: cobra.NoArgs, RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := newClient(cfg)
 		if err != nil {
